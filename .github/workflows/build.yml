@@ -19,6 +19,14 @@ jobs:
           java-version: '17'
           distribution: 'temurin'
 
+      - name: Instalar Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Descomprimir proyecto
+        run: |
+          unzip aria-github.zip
+          cp -r aria-v2/* .
+
       - name: Dar permisos a Gradle
         run: chmod +x ./gradlew
 
