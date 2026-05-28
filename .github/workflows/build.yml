@@ -1,39 +1,30 @@
 name: Compilar Aria APK
-
 on:
   push:
     branches: [ main, principal ]
   workflow_dispatch:
-
 jobs:
   build:
     runs-on: ubuntu-latest
-
     steps:
-      - name: Descargar código
+      - name: Checkout
         uses: actions/checkout@v4
-
-      - name: Configurar Java 17
+      - name: Setup Java
         uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
-
-      - name: Instalar Android SDK
+      - name: Setup Android SDK
         uses: android-actions/setup-android@v3
-
-      - name: Descomprimir proyecto
+      - name: Unzip project
         run: |
           unzip aria-github.zip
           cp -r aria-v2/* .
-
-      - name: Dar permisos a Gradle
+      - name: Make gradlew executable
         run: chmod +x ./gradlew
-
-      - name: Compilar APK
+      - name: Build APK
         run: ./gradlew assembleDebug
-
-      - name: Subir APK
+      - name: Upload APK
         uses: actions/upload-artifact@v4
         with:
           name: Aria-APK
